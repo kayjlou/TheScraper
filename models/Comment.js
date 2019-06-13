@@ -1,12 +1,12 @@
-const mongoose = require('mongoose')
+// const { Schema, Model } = require('mongoose')
 
-let CommentSchema = new mongoose.Schema({
-  title: String,
-  body: String
-})
+module.exports = (Schema, model) => {
+  const Comment = new Schema({
+    title: String,
+    body: String
+  })
 
-//Make the comment model
-let Comment = mongoose.model('Comment', CommentSchema)
+  //Make the comment model
+  return model('Comment', Comment)
 
-//Export Comment model
-module.exports = Comment
+}
