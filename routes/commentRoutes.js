@@ -5,7 +5,7 @@ module.exports = app => {
   //Get all articles
   app.get('/comments', (req, res) => {
     Comment.find({})
-      .populate('comment')
+      // .populate('comment')
       .then(comments => {
         res.json(comments)
       })
@@ -24,9 +24,12 @@ module.exports = app => {
 
   //Post a comment
   app.post('/comments', (req, res) => {
+    console.log('Posting comment')
     Comment.create(req.body, e => {
       if (e) throw e
-      res.sendStatus(200)
+      else {
+        res.sendStatus(200)
+      }
     })
   })
 }

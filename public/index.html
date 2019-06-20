@@ -6,15 +6,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
 <body>
-  <nav id='nav-bar'>
-    <header> Scraper</header>
+  <nav>
+    <div class="nav-wrapper right">
+      <!-- <img class='nav-img' src='assets/images/news.png' /> -->
+      <ul id="nav-mobile">
+        <li><a class="waves-effect waves-light btn" onclick=scrape()>Scrape new articles</a></li>
+        <li><a class="waves-effect waves-light btn" onclick=displayArticles()>Display Articles</a></li>
+      </ul>
+    </div>
   </nav>
+
+
+
+
+
   <div id="welcome">
     <header> Welcome to the Scraper!</header>
   </div>
+  <div class="articles">
+
+
+  </div>
+  <div class="comments"></div>
 </body>
+
+
+
+
+<script type='text/javascript'>
+
+  const scrape = _ => {
+    console.log("scraping articles")
+    fetch('/scrape')
+      .then(r => r.json())
+      .then((articles) => {
+        console.log(`Scrape completed`)
+      })
+  }
+
+  const displayArticles = _ => {
+    console.log("Retrieving articles")
+    return fetch('/articles')
+      .then(articles => articles.json())
+      .then((articles) => {
+        for (let i = 0; i < 15; i++) {
+          let titleEl = document.createElement('h4')
+          titleEl.className = articles[i].title
+          titleEl.innerHTML = articles[i].title;
+          document.querySelector('.articles').append(titleEl)
+
+        };
+        console.log(`Here is an article: ${articles[0].title}`)
+      }).catch(e => console.log(e))
+  }
+
+  //Post a new comment
+  const newCommment = _ => {
+    const options = {
+      method: 'Post',
+      body: JSON.stringify({
+        // body: document.querySelector()
+        summary: document.querySelector('#comment').value
+
+      }),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }
+    return fetch('/comments', options)
+      .then(res => res.json())
+      .catch(e => console.log(e))
+  }
+
+
+</script>
 
 </html>
