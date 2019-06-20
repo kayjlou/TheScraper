@@ -1,8 +1,8 @@
 const express = require('express')
 const { join } = require('path')
 const app = express()
-const axios = require('axios')
-const cheerio = require('cheerio')
+// const axios = require('axios')
+// const cheerio = require('cheerio')
 // const db = require('mongojs')('scraper_db')
 
 app.use(express.static(join(__dirname, 'public')))
@@ -16,5 +16,5 @@ require('mongoose').connect('mongodb://localhost/scraperdb', { useNewUrlParser: 
   .catch(e => console.log(e))
 
 
-  //Runs function to scrape
+//Next write out schemas(blue print) for the article it will be under models
 
