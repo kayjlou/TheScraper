@@ -3,7 +3,6 @@ module.exports = (Schema, model) => {
   const Article = new Schema({
     title: {
       type: String,
-      require: true
     },
     summary: {
       type: String

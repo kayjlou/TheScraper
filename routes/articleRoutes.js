@@ -1,6 +1,5 @@
 const { Article } = require('../models')
 const axios = require('axios')
-const cheerio = require('cheerio')
 
 module.exports = app => {
 
@@ -20,12 +19,28 @@ module.exports = app => {
         const $ = require('cheerio').load(data)
         const results = []
 
+        getSummary = (elem) => {
+          let summary = ""
+          if ($(elem).find("ul").length) {
+            summary = $(elem).find("li").first().text();
+            console.log('first summary ' + summary)
+          } else if ($(elem).find("p").text()) {
+            summary = $(elem).find("p").text();
+            console.log('second summary ' + summary)
+            console.log('-------------------------')
+          } else {
+            summary = "No summary available"
+
+          }
+          return summary
+        }
+
         $('article').each((i, elem) => results.push({
           title: $(elem)
             .find('h2')
             .text(),
 
-          summary: $(elem).find('p').text(),
+          summary: getSummary(elem),
           link: "https://www.nytimes.com" + $(elem).find('a').attr('href')
         }))
         console.log(results)
@@ -34,16 +49,20 @@ module.exports = app => {
       })
   })
 
+
+
   //Returns all favorite articles
   app.get('/favorites', (req, res) => {
-    Article.find({ favorite: true })
+    Article.find({ saved: true })
       .then(articles => res.json(articles))
       .catch(e => console.log(e))
   })
 
   //Updates articles to favorite 
   app.put('/articles/:id', (req, res) => {
-    Article.findByIdAndUpdate(req.params.id, { favorite: true })
+    console.log(`updating favorite at ${req.params.id}`)
+
+    Article.findByIdAndUpdate(req.params.id, { saved: true })
       .then(_ => res.sendStatus(200))
       .catch(e => console.log(e))
   })

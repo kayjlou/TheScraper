@@ -50,6 +50,15 @@
    transition: all 0.25s ease-in-out;
  }
 
+ .btn {
+   width: 20%;
+ }
+
+ .card {
+   padding: 5px;
+   margin-bottom: 10px;
+ }
+
  .button:hover {
    opacity: 1;
    box-shadow: 0 5px 5px 0 transparent;

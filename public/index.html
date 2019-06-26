@@ -32,7 +32,7 @@
 
       <button class="button" onclick=scrape()>Scrape new articles</button>
       <button class="button" onclick=displayArticles()>Display Articles</button>
-      <button class="button">Saved Articles</button>
+      <button class="button" onclick=displaySavedArticles()>Favorites</button>
     </div>
     <!-- </div> -->
     <h4> Web Scraper</h4>
@@ -52,8 +52,8 @@
 <script type='text/javascript'>
 
   const scrape = _ => {
-    console.log("scraping articles")
-    fetch('/scrape')
+    console.log("Front End Scraping articles")
+    return fetch('/scrape')
       .then(r => r.json())
       .then((articles) => {
         console.log(`Scrape completed`)
@@ -65,37 +65,36 @@
     return fetch('/articles')
       .then(articles => articles.json())
       .then((articles) => {
-        //make button with id on it to update/delete
-        for (let i = 0; i < 1; i++) {
+        document.querySelector('.articles').innerHTML = ""
+        articles.forEach(article => {
+          console.log(article)
+          let articleDiv = document.createElement('div')
+          articleDiv.className = "card"
+          articleDiv.innerHTML = `
+          <div class = 'card-body'>
+          <h5 class = 'card-title'>${article.title}</h5>
+          <p class = 'card-text'>${article.summary}</p>
+          <button class="btn btn-primary" id = ${article._id} onclick = Favorite(event)>Favorite</button>
+          <a href=${article.link} class="btn btn-primary">Read </a>
+          </div>
+          `
 
-          //   let html = {
-          //   `< div class="card" >
-          //       <div class="card-body">
-          //         <h5 class="card-title">${articles[i].title}</h5>
-          //         <p class="card-text">${articles[i].summary}</p >
-          //     <a href="#" class="btn btn-primary">${articles[i].link}</a>
-          //       </div >
-          //   </div>`
-          // }
-
-
-          //create card
-          let divEl = document.createElement('div')
-          divEl.className = 'card'
-          let divBody = document.createElement('div')
-          divBody.className = 'card-body'
-          // //title
-          let titleEl = document.createElement('h5')
-          titleEl.className = 'card-title'
-          titleEl.innerHTML = articles[i].title;
-          document.querySelector('.articles').append(divEl)
-          document.querySelector('.card').appendChild(divBody)
-          document.querySelector('.card-body').appendChild(titleEl)
-
-        };
-        console.log(`Here is an article: ${articles[0].title}`)
+          document.querySelector('.articles').append(articleDiv)
+        })
       }).catch(e => console.log(e))
   }
+
+  //Save to favorites
+  const Favorite = event => {
+    console.log("Adding to favorite")
+    fetch(`/articles/${event.target.id}`, {
+      method: 'PUT'
+    })
+      // .then(res => res.json())
+      .catch(e => console.log(e))
+
+  }
+
 
   //Post a new comment
   const newCommment = _ => {
