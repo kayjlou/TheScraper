@@ -54,7 +54,7 @@
   const scrape = _ => {
     console.log("Front End Scraping articles")
     return fetch('/scrape')
-      .then(r => r.json())
+      // .then(r => r.json())
       .then((articles) => {
         console.log(`Scrape completed`)
       })
@@ -76,6 +76,7 @@
           <p class = 'card-text'>${article.summary}</p>
           <button class="btn btn-primary" id = ${article._id} onclick = Favorite(event)>Favorite</button>
           <a href=${article.link} class="btn btn-primary">Read </a>
+          <button class="btn btn-primary" id = ${article._id} onclick = Delete(event)>Delete</button>
           </div>
           `
 
@@ -92,8 +93,51 @@
     })
       // .then(res => res.json())
       .catch(e => console.log(e))
-
   }
+
+  //Save to favorites
+  const RemoveFave = event => {
+    console.log("Removing from favorite")
+    fetch(`/favorites/${event.target.id}`, {
+      method: 'PUT'
+    })
+      .then(displaySavedArticles())
+      .catch(e => console.log(e))
+  }
+
+  const Delete = event => {
+    console.log("Removing from favorite")
+    fetch(`/articles/${event.target.id}`, {
+      method: 'DELETE'
+    })
+      .then(displayArticles())
+      .catch(e => console.log(e))
+  }
+
+  const displaySavedArticles = _ => {
+    console.log("Retrieving articles")
+    return fetch('/favorites')
+      .then(articles => articles.json())
+      .then((articles) => {
+        document.querySelector('.articles').innerHTML = ""
+        articles.forEach(article => {
+          console.log(article)
+          let articleDiv = document.createElement('div')
+          articleDiv.className = "card"
+          articleDiv.innerHTML = `
+          <div class = 'card-body'>
+          <h5 class = 'card-title'>${article.title}</h5>
+          <p class = 'card-text'>${article.summary}</p>
+          <button class="btn btn-primary" id = ${article._id} onclick = RemoveFave(event)>Remove</button>
+          <a href=${article.link} class="btn btn-primary">Read </a>
+          </div>
+          `
+
+          document.querySelector('.articles').append(articleDiv)
+        })
+      }).catch(e => console.log(e))
+  }
+
 
 
   //Post a new comment

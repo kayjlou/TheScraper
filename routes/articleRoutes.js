@@ -15,7 +15,6 @@ module.exports = app => {
   app.get('/scrape', (req, res) => {
     axios.get('https://www.nytimes.com/')
       .then(({ data }) => {
-        console.log('Scraping NY times')
         const $ = require('cheerio').load(data)
         const results = []
 
@@ -23,30 +22,41 @@ module.exports = app => {
           let summary = ""
           if ($(elem).find("ul").length) {
             summary = $(elem).find("li").first().text();
-            console.log('first summary ' + summary)
-          } else if ($(elem).find("p").text()) {
-            summary = $(elem).find("p").text();
-            console.log('second summary ' + summary)
-            console.log('-------------------------')
           } else {
-            summary = "No summary available"
-
+            summary = $(elem).find("p").text();
           }
           return summary
         }
 
-        $('article').each((i, elem) => results.push({
-          title: $(elem)
-            .find('h2')
-            .text(),
+        $('article').each((i, elem) => {
+          Article.find({ link: `https://www.nytimes.com${$(elem).find('a').attr('href')}` })
+            .then(article => {
+              if (article.length === 0) {
+                Article.create({
+                  title: $(elem)
+                    .find('h2')
+                    .text(),
+                  summary: getSummary(elem),
+                  link: `https://www.nytimes.com${$(elem).find('a').attr('href')}`,
+                })
+              }
+            })
+        })
+        res.sendStatus(200)
 
-          summary: getSummary(elem),
-          link: "https://www.nytimes.com" + $(elem).find('a').attr('href')
-        }))
-        console.log(results)
-        Article.create(results)
-        res.send(results)
+        // $('article').each((i, elem) => results.push({
+        //   title: $(elem)
+        //     .find('h2')
+        //     .text(),
+
+        //   summary: getSummary(elem),
+        //   link: "https://www.nytimes.com" + $(elem).find('a').attr('href')
+        // }))
+        // console.log(results)
+        // Article.create(results)
+        // res.send(results)
       })
+      .catch(e => console.log(e))
   })
 
 
@@ -63,6 +73,15 @@ module.exports = app => {
     console.log(`updating favorite at ${req.params.id}`)
 
     Article.findByIdAndUpdate(req.params.id, { saved: true })
+      .then(_ => res.sendStatus(200))
+      .catch(e => console.log(e))
+  })
+
+  //Updates articles to remove from favorite
+  app.put('/favorites/:id', (req, res) => {
+    console.log(`removing favorite at ${req.params.id}`)
+
+    Article.findByIdAndUpdate(req.params.id, { saved: false })
       .then(_ => res.sendStatus(200))
       .catch(e => console.log(e))
   })
