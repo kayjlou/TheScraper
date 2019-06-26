@@ -8,10 +8,10 @@ module.exports = (Schema, model) => {
     summary: {
       type: String
     },
-    // link: {
-    //   type:
-    //   ref:
-    // }
+    link: {
+      type: String
+      // ref:
+    },
     saved: {
       type: Boolean,
       default: false

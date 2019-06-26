@@ -16,7 +16,7 @@ module.exports = app => {
   app.get('/scrape', (req, res) => {
     axios.get('https://www.nytimes.com/')
       .then(({ data }) => {
-        console.log('Scraping Stack Overflow')
+        console.log('Scraping NY times')
         const $ = require('cheerio').load(data)
         const results = []
 
@@ -34,6 +34,27 @@ module.exports = app => {
       })
   })
 
+  //Returns all favorite articles
+  app.get('/favorites', (req, res) => {
+    Article.find({ favorite: true })
+      .then(articles => res.json(articles))
+      .catch(e => console.log(e))
+  })
+
+  //Updates articles to favorite 
+  app.put('/articles/:id', (req, res) => {
+    Article.findByIdAndUpdate(req.params.id, { favorite: true })
+      .then(_ => res.sendStatus(200))
+      .catch(e => console.log(e))
+  })
+
+  //Deletes 
+  app.delete('/articles/:id', (req, res) => {
+    Article.findByIdAndDelete(req.params.id)
+      .then(_ => res.sendStatus(200))
+      .catch(e => console.log(e))
+  })
+
 
 
   app.get('/', (req, res) => {
@@ -42,6 +63,7 @@ module.exports = app => {
         console.log('Retrieving articles')
         res.json(articles)
       })
+      .catch(e => console.log(e))
   })
 
 
