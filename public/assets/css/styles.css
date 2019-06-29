@@ -89,7 +89,7 @@
 
  .btn:hover {
    opacity: .8;
-   border: 0px
+  
  }
 
  .heart {
@@ -101,21 +101,30 @@
    height: 30px;
  }
 
- .favorite {
+ .book, .trash {
+   height: 30px;
+ }
+
+ .btn {
+   width: 60px;
+   padding: 2px;
+ }
+
+ .action {
    background-color: white;
    border: 0px;
    width: 50px;
    padding: 2px;
  }
 
- .favorite:hover {
+ .action:hover {
    background-color: white
  }
 
- .favorite:active {
+ .action:active {
    border: 0px;
  }
 
- .heart:active {
+ .imageBtn:active {
    height: 35px;
  }
