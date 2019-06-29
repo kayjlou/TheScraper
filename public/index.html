@@ -75,9 +75,9 @@
           <div class = 'card-body'>
           <h5 class = 'card-title'>${article.title}</h5>
           <p class = 'card-text'>${article.summary}</p>
-          <button class="btn favorite" id = ${article._id} onclick = Favorite(event)><img class = 'heart' src = "assets/images/heart.png"></img></button>
-          <a href=${article.link} class="btn btn-primary read">Read </a>
-          <button class="btn btn-primary delete" id = ${article._id} onclick = Delete(event)>Delete</button>
+          <button class="btn action" id = ${article._id} onclick = Favorite(event)><img class = 'imageBtn heart' id = ${article._id} src = "assets/images/heart.png" onclick = Favorite(event)></img></button>
+          <a href=${article.link} class="btn bookaction"><img class = 'imageBtn book' src = "assets/images/read.png"></img> </a>
+          <button class="btn action" id = ${article._id} onclick = Delete(event)><img class = 'imageBtn trash'  onclick = Delete(event) id = ${article._id}  src = "assets/images/trash.png"></img></button>
           </div>
           `
 
@@ -130,9 +130,9 @@
           <div class = 'card-body'>
           <h5 class = 'card-title'>${article.title}</h5>
           <p class = 'card-text'>${article.summary}</p>
-          <button class="btn btn-primary remove" id = ${article._id} onclick = RemoveFave(event)>Remove</button>
-          <a href=${article.link} class="btn btn-primary">Read </a>
-          </div>
+          <a href=${article.link} class="btn bookaction"><img class = 'imageBtn book' src = "assets/images/read.png"></img> </a>
+
+          <button class="btn action" id = ${article._id} onclick = RemoveFave(event)><img class = 'imageBtn trash'  onclick = RemoveFave(event) id = ${article._id}  src = "assets/images/trash.png"></img></button>
           `
 
           document.querySelector('.articles').append(articleDiv)
