@@ -33,9 +33,7 @@ module.exports = app => {
             .then(article => {
               if (article.length === 0) {
                 Article.create({
-                  title: $(elem)
-                    .find('h2')
-                    .text(),
+                  title: $(elem).find('h2').text(),
                   summary: getSummary(elem),
                   link: `https://www.nytimes.com${$(elem).find('a').attr('href')}`,
                 })

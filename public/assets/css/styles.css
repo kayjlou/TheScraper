@@ -51,7 +51,7 @@
  }
 
  .btn {
-   width: 20%;
+   width: 15%;
  }
 
  .card {
@@ -81,4 +81,41 @@
  .articles {
    margin: auto;
    width: 70%;
+ }
+
+ .read {
+   background-color: green
+ }
+
+ .btn:hover {
+   opacity: .8;
+   border: 0px
+ }
+
+ .heart {
+   border-radius: 50%;
+   -webkit-border-radius: 50%;
+   -moz-border-radius: 50%;
+   -ms-border-radius: 50%;
+   -o-border-radius: 50%;
+   height: 30px;
+ }
+
+ .favorite {
+   background-color: white;
+   border: 0px;
+   width: 50px;
+   padding: 2px;
+ }
+
+ .favorite:hover {
+   background-color: white
+ }
+
+ .favorite:active {
+   border: 0px;
+ }
+
+ .heart:active {
+   height: 35px;
  }
