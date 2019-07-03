@@ -9,7 +9,6 @@ module.exports = (Schema, model) => {
     },
     link: {
       type: String
-      // ref:
     },
     saved: {
       type: Boolean,

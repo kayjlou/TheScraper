@@ -2,8 +2,13 @@
 
 module.exports = (Schema, model) => {
   const Comment = new Schema({
-    title: String,
-    body: String
+    body: {
+      type: String
+    },
+    article: {
+      type: Schema.Types.ObjectId,
+      ref: 'Article'
+    }
   })
 
   //Make the comment model
