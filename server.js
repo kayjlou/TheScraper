@@ -9,7 +9,7 @@ app.use(express.json())
 
 require('./routes')(app)
 
-require('mongoose').connect('mongodb://localhost/scraperdb', { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: true })
+require('mongoose').connect(process.env.MONGODB_URI || 'mongodb://localhost/scraperdb', { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: true })
   .then(_ => app.listen(3000))
   .catch(e => console.log(e))
 
