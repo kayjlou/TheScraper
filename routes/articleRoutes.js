@@ -3,6 +3,11 @@ const axios = require('axios')
 
 module.exports = app => {
 
+
+  app.get('/', (req, res) => {
+    Article.find({})
+    res.sendFile(__dirname + '/index.html')
+  })
   //Get all articles
   app.get('/articles', (req, res) => {
     Article.find({})
