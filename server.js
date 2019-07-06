@@ -22,7 +22,7 @@ require('mongoose').connect(MONGODB_URI, { useNewUrlParser: true, useCreateIndex
   .catch(e => console.log(e))
 
 app.get('/', (req, res) => {
-  res.sendFile('__dirname' + '/public/index.html')
+  res.sendFile('/index.html')
 })
 
 
