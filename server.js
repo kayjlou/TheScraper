@@ -1,6 +1,7 @@
 const express = require('express')
 const { join } = require('path')
 const app = express()
+require('dotenv').config()
 
 let MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/scraperdb'
 
