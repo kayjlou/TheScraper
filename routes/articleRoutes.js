@@ -95,14 +95,6 @@ module.exports = app => {
 
 
 
-  // app.get('/', (req, res) => {
-  //   Article.find({})
-  //   .then(articles => {
-  //     console.log('Retrieving articles')
-  //     res.json(articles)
-  //   })
-  //   .catch(e => console.log(e))
-  // })
 
 
 
