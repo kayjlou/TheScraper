@@ -6,7 +6,7 @@ require('dotenv').config()
 let MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/scraperdb'
 
 
-app.use(express.static(join(__dirname, '/public')))
+app.use(express.static(__dirname, '/public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
