@@ -4,9 +4,6 @@ const axios = require('axios')
 module.exports = app => {
 
 
-  app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html')
-  })
   //Get all articles
   app.get('/articles', (req, res) => {
     Article.find({})
@@ -97,15 +94,16 @@ module.exports = app => {
 
 
 
-  app.get('/', (req, res) => {
-    Article.find({})
-      .then(articles => {
-        console.log('Retrieving articles')
-        res.json(articles)
-      })
-      .catch(e => console.log(e))
-  })
+  // app.get('/', (req, res) => {
+  //   Article.find({})
+  //   .then(articles => {
+  //     console.log('Retrieving articles')
+  //     res.json(articles)
+  //   })
+  //   .catch(e => console.log(e))
+  // })
 
+ 
 
 
 
