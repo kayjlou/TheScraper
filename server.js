@@ -18,12 +18,10 @@ app.use(express.json())
 require('./routes')(app)
 
 require('mongoose').connect(MONGODB_URI, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: true })
-  .then(_ => app.listen(process.env.PORT || 3000))
+  .then(_ => app.listen(process.env.PORT || 8080))
   .catch(e => console.log(e))
 
-app.use('*', (req, res) => {
-  res.sendFile(__dirname + '/index.html')
-})
+
 
 
 //Next write out schemas(blue print) for the article it will be under models

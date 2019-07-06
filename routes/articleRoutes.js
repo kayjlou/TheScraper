@@ -4,6 +4,9 @@ const axios = require('axios')
 module.exports = app => {
 
 
+  app.get('/', function (req, res) {
+    res.redirect('/articles');
+  });
   //Get all articles
   app.get('/articles', (req, res) => {
     Article.find({})
@@ -103,7 +106,7 @@ module.exports = app => {
   //   .catch(e => console.log(e))
   // })
 
- 
+
 
 
 
