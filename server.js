@@ -21,9 +21,9 @@ require('mongoose').connect(MONGODB_URI, { useNewUrlParser: true, useCreateIndex
   .then(_ => app.listen(process.env.PORT || 8080))
   .catch(e => console.log(e))
 
-app.get('/', (req, res) => {
-  res.sendFile('/index.html')
-})
+// app.get('/', (req, res) => {
+//   res.sendFile('/index.html')
+// })
 
 
 
